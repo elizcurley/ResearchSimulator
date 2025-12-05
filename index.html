@@ -1,1 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Social Work Research Simulator</title>
+  <style>
+    :root {
+      font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+      color: #0f172a;
+      background: #f8fafc;
+    }
 
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 50%, #f8fafc 100%);
+      min-height: 100vh;
+    }
+
+    header {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 1.5rem 2rem;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.35);
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.85rem;
+    }
+
+    p.subtitle {
+      margin: 0.35rem 0 0;
+      color: #cbd5e1;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 1.5rem auto 3rem;
+      padding: 0 1.25rem;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 960px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+      padding: 1.5rem;
+    }
+
+    .node-title {
+      margin: 0 0 0.5rem;
+      font-size: 1.4rem;
+      color: #0f172a;
+    }
+
+    .node-body {
+      line-height: 1.6;
+      margin: 0.25rem 0 1rem;
+    }
+
+    .learning-note {
+      background: #e2f3ff;
+      border: 1px solid #bae6fd;
+      color: #0b4f78;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+    }
+
+    .choices {
+      display: grid;
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+    }
+
+    button.choice {
+      text-align: left;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.05s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button.choice:hover {
+      transform: translateY(-1px);
+      border-color: #0ea5e9;
+      box-shadow: 0 10px 20px rgba(14, 165, 233, 0.12);
+    }
+
+    button.choice span.meta {
+      display: block;
+      color: #475569;
+      font-size: 0.95rem;
+      margin-top: 0.25rem;
+    }
+
+    .metrics {
+      display: grid;
+      gap: 0.6rem;
+      margin-top: 0.4rem;
+    }
+
+    .metric {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 0.75rem;
+      border-radius: 10px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+    }
+
+    .metric span.label {
+      font-weight: 600;
+    }
+
+    .meter {
+      position: relative;
+      height: 10px;
+      flex: 1;
+      margin-left: 0.75rem;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .meter > div {
+      position: absolute;
+      inset: 0;
+      width: 50%;
+      background: linear-gradient(90deg, #22c55e, #0ea5e9);
+      transition: width 0.3s ease;
+    }
+
+    .history {
+      max-height: 420px;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+    }
+
+    .history-entry {
+      border-left: 4px solid #0ea5e9;
+      padding-left: 0.75rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .history-entry small {
+      color: #475569;
+      display: block;
+      margin-top: 0.15rem;
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.35rem;
+    }
+
+    .badge {
+      background: #0ea5e9;
+      color: #fff;
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+    }
+
+    .footer-actions {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .ghost {
+      background: transparent;
+      border: 1px solid #cbd5e1;
+      color: #0f172a;
+      border-radius: 12px;
+      padding: 0.6rem 0.9rem;
+      cursor: pointer;
+    }
+
+    .muted {
+      color: #475569;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Social Work Research Simulator</h1>
+    <p class="subtitle">A choose-your-own-adventure for MSW students practicing ethical, rigorous, community-centered research decisions.</p>
+  </header>
+
+  <main>
+    <section class="card" id="story-card">
+      <h2 class="node-title" id="node-title"></h2>
+      <p class="node-body" id="node-body"></p>
+      <div class="learning-note" id="learning-note"></div>
+      <div class="choices" id="choices"></div>
+      <div class="footer-actions">
+        <button class="ghost" id="restart-btn">Restart</button>
+        <span class="muted" id="path-label"></span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h3>Fieldwork Dashboard</h3>
+      <p class="muted">Track how your decisions impact the integrity of the study.</p>
+      <div class="metrics" id="metrics"></div>
+
+      <h4>Path Notes</h4>
+      <div class="history" id="history"></div>
+    </section>
+  </main>
+
+  <script>
+    const metrics = {
+      ethics: 5,
+      rigor: 5,
+      time: 5,
+      budget: 5,
+      trust: 5,
+      wellbeing: 5,
+    };
+
+    function buildFeedbackNote() {
+      const lens = [];
+      if (metrics.ethics >= 7 && metrics.trust >= 7) {
+        lens.push("Ethics & trust: Your safeguards and transparency opened doors for deeper partnership.");
+      } else if (metrics.ethics <= 3 || metrics.trust <= 3) {
+        lens.push("Ethics & trust: Communities may feel extracted—plan for repair and shared benefit next time.");
+      }
+
+      if (metrics.rigor >= 7) {
+        lens.push("Rigor: Strong design choices improved credibility; ensure accessibility matches the rigor.");
+      } else if (metrics.rigor <= 3) {
+        lens.push("Rigor: Limited validity signals a need for clearer questions and alignment between methods and aims.");
+      }
+
+      if (metrics.time >= 7) {
+        lens.push("Time: Speed supported delivery, but watch for rushed steps that could erode trust.");
+      } else if (metrics.time <= 3) {
+        lens.push("Time: The slower pace protected quality—next cycle, set expectations and resource needs early.");
+      }
+
+      if (metrics.budget <= 3) {
+        lens.push("Budget: Resources were stretched; document true costs to advocate for sustainable funding.");
+      } else if (metrics.budget >= 7) {
+        lens.push("Budget: Savings were achieved—invest part of that surplus into participant benefit and data quality.");
+      }
+
+      if (metrics.wellbeing <= 3) {
+        lens.push("Wellbeing: High strain emerged; integrate debriefs and pacing for the research team.");
+      } else if (metrics.wellbeing >= 7) {
+        lens.push("Wellbeing: Your pacing supported the team; share these practices in future proposals.");
+      }
+
+      return lens.join(" ");
+    }
+
+    const nodes = {
+      intro: {
+        title: "New Field Placement, First Study",
+        body: "You've joined a community agency serving youth navigating housing instability. Your supervisor asks you to design a small study to inform service improvements. The community has seen extractive research before and is wary of outsiders.",
+        note: "Consider how early moves shape trust, feasibility, and data quality. Each choice updates the dashboard so you can see tradeoffs.",
+        options: [
+          { text: "Frame the study around youth-defined priorities.", context: "Slows down setup but builds consent to proceed.", to: "defineQuestion", effects: { trust: 1, ethics: 1, time: -1 }, badges: ["Community-led"] },
+          { text: "Start with the agency's existing grant metrics to move quickly.", context: "Fast alignment with leadership needs yet may miss lived experience.", to: "defineQuestion", effects: { rigor: 1, time: 1, trust: -1 }, badges: ["Speed"] },
+          { text: "Adapt a national evidence-based question for local comparison.", context: "Brings credibility but risks mismatch with local context.", to: "defineQuestion", effects: { rigor: 1, budget: -1, trust: -1 }, badges: ["Comparative"] },
+        ],
+      },
+      defineQuestion: {
+        title: "Clarify the Research Question",
+        body: "Stakeholders want to understand service access, perceived safety, and the impact of drop-in programs. You need a focal question that is actionable and ethical.",
+        note: "Narrowing scope can reduce harm and increase rigor. Assess feasibility and risk to participants.",
+        options: [
+          { text: "Ask: 'How does the drop-in program change youths' sense of safety over six weeks?'", context: "Tight timeline and pre/post framing demand careful measurement.", to: "partner", effects: { rigor: 1, time: -1, budget: -1 } },
+          { text: "Ask: 'What barriers keep youth from returning after their first visit?'", context: "Exploratory and relational—invites stories and empathy-building.", to: "partner", effects: { trust: 1, ethics: 1, rigor: -1 } },
+          { text: "Ask: 'Do program outcomes differ by race/ethnicity across the last year?'", context: "Equity lens adds value but needs adequate data and safeguards against harm.", to: "partner", effects: { rigor: 1, budget: -1, trust: -1 } },
+        ],
+      },
+      partner: {
+        title: "Engage Partners",
+        body: "A youth advisory board offers to help but has limited time. The agency director wants results quickly for a funder call.",
+        note: "Engagement choices alter trust, time, and rigor. Balancing timelines with co-governance is key.",
+        options: [
+          { text: "Co-design instruments with the youth board over two workshops.", context: "Builds ownership but requires compensating time and voice.", to: "dataGovernance", effects: { trust: 2, ethics: 1, time: -2, budget: -1 }, badges: ["Power-sharing"] },
+          { text: "Run a single feedback session and finalize instruments yourself.", context: "Balances voice with speed; risk of missing nuance.", to: "dataGovernance", effects: { trust: 1, time: 1, rigor: -1 } },
+          { text: "Skip engagement to stay on deadline.", context: "Saves time now but may undermine participation later.", to: "dataGovernance", effects: { time: 2, trust: -2, ethics: -1 } },
+        ],
+      },
+      dataGovernance: {
+        title: "Data Governance",
+        body: "The agency wants de-identified logs stored on their server. Youth advisors ask for shared control over how data are used beyond this project.",
+        note: "Clarifying ownership and reuse protects communities and researchers alike.",
+        options: [
+          { text: "Develop a data use agreement with shared decision rights for youth reps.", context: "Promotes accountability but adds coordination time.", to: "method", effects: { trust: 2, ethics: 1, time: -1, budget: -1 } },
+          { text: "House data on the agency server with read-only access for you.", context: "Meets IT policy, keeps access narrow, but limits co-analysis.", to: "method", effects: { rigor: -1, trust: 1, time: 1 } },
+          { text: "Store copies locally to speed analysis with minimal paperwork.", context: "Fastest path yet increases privacy risk and trust erosion.", to: "method", effects: { time: 2, ethics: -2, trust: -1 }, badges: ["Data risk"] },
+        ],
+      },
+      method: {
+        title: "Choose a Method",
+        body: "The agency can provide de-identified service logs, but youth want their experiences voiced. You must balance richness with feasibility.",
+        note: "Method choice influences sampling, safety, and analysis burden.",
+        options: [
+          { text: "Participatory action research: focus groups + member-led analysis.", context: "High ownership, higher facilitation load.", to: "sampling", effects: { ethics: 1, trust: 2, time: -1, budget: -1, rigor: 1 }, badges: ["PAR"] },
+          { text: "Mixed methods: survey linked to administrative data and brief interviews.", context: "Balances breadth and depth with moderate burden.", to: "sampling", effects: { rigor: 2, budget: -1, time: -1 } },
+          { text: "Rapid online survey using agency mailing list.", context: "Fast and cheap but may exclude those without digital access.", to: "sampling", effects: { time: 2, budget: 1, trust: -1, rigor: -1 }, badges: ["Rapid"] },
+        ],
+      },
+      sampling: {
+        title: "Recruitment Strategy",
+        body: "You need a plan that respects safety and yields useful variation. Some youth distrust agency channels.",
+        note: "Equitable recruitment can improve both ethics and validity.",
+        options: [
+          { text: "Youth peer navigators recruit at drop-in hours with stipends.", context: "Builds safety and reach but requires training and funds.", to: "compensation", effects: { trust: 2, ethics: 1, budget: -2, time: -1 } },
+          { text: "Email all active clients; participation is opt-in online.", context: "Least labor-intensive; may miss disengaged or precarious youth.", to: "compensation", effects: { time: 2, budget: 1, trust: -1, rigor: -1 } },
+          { text: "Use agency logs to randomly sample and call households.", context: "Adds representativeness but could trigger privacy concerns.", to: "compensation", effects: { rigor: 1, time: -1, trust: -1, ethics: -1 } },
+        ],
+      },
+      compensation: {
+        title: "Participation Support",
+        body: "Community members ask whether youth will be compensated and how burdens like transit or phone data will be handled.",
+        note: "Compensation shapes who can participate and signals respect.",
+        options: [
+          { text: "Provide cash stipends and transit cards; budget is tight.", context: "Highest inclusion; might require cutting scope elsewhere.", to: "consent", effects: { trust: 2, ethics: 1, budget: -2 } },
+          { text: "Offer gift cards and snacks during sessions.", context: "Moderate support; easier approvals but may not address data costs.", to: "consent", effects: { trust: 1, ethics: 1, budget: -1 } },
+          { text: "Rely on voluntary participation without compensation.", context: "Saves money yet risks inequity and lower engagement.", to: "consent", effects: { budget: 2, trust: -2, ethics: -1 } },
+        ],
+      },
+      consent: {
+        title: "Consent & Risk",
+        body: "Some youth are minors, some are undocumented, and some are in crisis. The IRB requires a clear harm mitigation plan.",
+        note: "Risk mitigation is a core social work value. Ethics affect trust and downstream participation.",
+        options: [
+          { text: "Trauma-informed, layered consent with check-ins; allow partial participation.", context: "Sets tone of care; adds time per participant.", to: "instrument", effects: { ethics: 2, trust: 1, time: -1 } },
+          { text: "Digital consent form in multiple languages with hotline numbers.", context: "Improves access; ensure tech and literacy supports are ready.", to: "instrument", effects: { ethics: 1, time: 1, budget: -1 } },
+          { text: "Rely on agency's existing intake consent to avoid new paperwork.", context: "Fastest route yet may not cover new risks.", to: "instrument", effects: { time: 2, ethics: -2, trust: -1 }, badges: ["Risk"] },
+        ],
+      },
+      instrument: {
+        title: "Instrument Design",
+        body: "You must balance brevity with depth. Youth advisors warn against deficit-focused language.",
+        note: "Good instruments reduce harm and improve data quality.",
+        options: [
+          { text: "Co-create interview guide emphasizing strengths and safety planning.", context: "Centers voice; adds iteration cycles.", to: "pilot", effects: { trust: 1, rigor: 1, time: -1, ethics: 1 } },
+          { text: "Use a validated trauma screener plus open-ended items.", context: "Higher rigor; watch for retraumatization and length.", to: "pilot", effects: { rigor: 2, budget: -1, time: -1, ethics: -1 } },
+          { text: "Short 8-item survey focusing on service satisfaction.", context: "Quick and light; may miss systemic issues youth care about.", to: "pilot", effects: { time: 2, budget: 1, rigor: -1 } },
+        ],
+      },
+      pilot: {
+        title: "Pilot & Iterate",
+        body: "A small pilot with four participants surfaces confusing items and emotional triggers.",
+        note: "Pilots catch issues early but consume time. Adjust based on what you learn.",
+        options: [
+          { text: "Revise language with youth reviewers and re-pilot.", context: "Strengthens trust and clarity; delays launch.", to: "field", effects: { trust: 1, rigor: 1, time: -1, budget: -1 } },
+          { text: "Adjust only the most confusing items to stay on schedule.", context: "Protects timeline while addressing key issues.", to: "field", effects: { time: 1, rigor: 1, trust: -1 } },
+          { text: "Proceed without changes to avoid further delay.", context: "Riskiest for data quality and participant experience.", to: "field", effects: { time: 2, trust: -1, ethics: -1 } },
+        ],
+      },
+      field: {
+        title: "Fieldwork Challenge",
+        body: "Midway through data collection, an agency partner asks for names of youth who describe safety concerns. Meanwhile, a participant becomes distressed while recounting past trauma.",
+        note: "Crisis response and confidentiality pressures often collide in practice.",
+        options: [
+          { text: "Hold boundaries: offer aggregated themes only; safety-plan with the distressed participant.", context: "Protects confidentiality and wellbeing; takes time.", to: "analysis", effects: { ethics: 2, trust: 1, time: -1 } },
+          { text: "Share pseudonymized notes with the director for rapid action.", context: "Could speed safety responses but weakens trust.", to: "analysis", effects: { trust: -1, ethics: -1, time: 1 }, badges: ["Confidentiality risk"] },
+          { text: "Pause data collection to revisit protocols with the IRB and youth board.", context: "Resets safety alignment yet delays deliverables.", to: "analysis", effects: { ethics: 2, rigor: 1, time: -2, budget: -1 } },
+        ],
+      },
+      analysis: {
+        title: "Analysis Plan",
+        body: "You have mixed qualitative notes and service logs. Youth want to see themselves in the analysis, and the director wants quick headlines.",
+        note: "Analysis choices shape credibility and accountability.",
+        options: [
+          { text: "Member-check themes with youth; run stratified descriptives; share draft visuals for edits.", context: "High collaboration and rigor; adds cycles and costs.", to: "reporting", effects: { trust: 2, rigor: 2, time: -1, budget: -1 }, badges: ["Participatory"] },
+          { text: "Conduct regression on service outcomes and provide a one-page summary; skip member checks.", context: "Meets funder speed but limits voice and reflexivity.", to: "reporting", effects: { time: 2, rigor: 1, trust: -1 } },
+          { text: "Use rapid qualitative coding to hit the deadline; defer quant analysis.", context: "Fast and flexible, yet weaker validity.", to: "reporting", effects: { time: 2, trust: -1, rigor: -1 } },
+        ],
+      },
+      reporting: {
+        title: "Reporting & Accountability",
+        body: "The funder briefing is in three days. Youth want messaging that centers strengths and avoids pathologizing.",
+        note: "Dissemination impacts community relationships and future access.",
+        options: [
+          { text: "Co-present with youth leaders; include a reflexivity section and data limitations.", context: "Centers shared ownership; requires rehearsal time and stipends.", to: "reflection", effects: { trust: 2, ethics: 1, time: -1, budget: -1 }, badges: ["Shared voice"] },
+          { text: "Publish a policy brief without community review to meet the deadline.", context: "Fastest, but risks misrepresentation and lost trust.", to: "reflection", effects: { time: 2, trust: -1, ethics: -1 } },
+          { text: "Release an academic-style report with technical detail only.", context: "Elevates rigor for peers; less accessible to participants.", to: "reflection", effects: { rigor: 1, trust: -1, engagement: -1 } },
+        ],
+      },
+      reflection: {
+        title: "Reflect & Plan Next Steps",
+        body: "The project wraps. How will you honor participants and improve next time?",
+        note: "Reflection consolidates learning and accountability.",
+        options: [
+          { text: "Hold a feedback circle and offer continued collaboration roles.", context: "Deepens accountability; takes planning and compensation.", to: "sustainability", effects: { trust: 2, ethics: 1, budget: -1 } },
+          { text: "Email a thank-you summary with resource links.", context: "Keeps a touchpoint with minimal effort.", to: "sustainability", effects: { time: 1, trust: 1 } },
+          { text: "Archive the project and move on to the next deadline.", context: "Ends quickly but risks extractive patterns.", to: "sustainability", effects: { trust: -2, ethics: -1, time: 2 } },
+        ],
+      },
+      sustainability: {
+        title: "Sustainability Planning",
+        body: "Partners ask what will happen with the findings next year and whether youth will stay involved.",
+        note: "Closing loops builds long-term trust and realistic scope.",
+        options: [
+          { text: "Co-create a one-year improvement roadmap with milestones.", context: "Sets shared accountability; requires facilitation time.", to: "endingTrust", effects: { trust: 1, rigor: 1, time: -1, budget: -1 } },
+          { text: "Schedule a six-month check-in and share anonymized data for agency use only.", context: "Practical and bounded; moderate trust-building.", to: "endingBalanced", effects: { trust: 1, time: 1 } },
+          { text: "Deliver files and step back without a follow-up plan.", context: "Lowest ongoing effort yet may erode goodwill.", to: "endingExtractive", effects: { trust: -1, time: 2, ethics: -1 } },
+        ],
+      },
+      endingTrust: {
+        title: "Outcome: Partner and Learn",
+        body: "Youth report feeling heard and want to co-lead future evaluations. The agency secures a grant that includes stipends for youth researchers.",
+        note: "High trust and ethics opened doors. Consider where rigor or time suffered and how to rebalance next cycle.",
+        options: [ { text: "Restart with a new cohort", to: "intro" } ],
+      },
+      endingBalanced: {
+        title: "Outcome: Balanced Delivery",
+        body: "Findings were accepted by the funder and modestly informed program tweaks. Some youth wished for deeper involvement but appreciated the follow-up.",
+        note: "You achieved moderate trust and rigor. Next time, invest early in co-governance to strengthen impact.",
+        options: [ { text: "Restart and test a new approach", to: "intro" } ],
+      },
+      endingExtractive: {
+        title: "Outcome: Transactional Study",
+        body: "The funder call was met, but community partners feel used and decline future participation. Data quality suffered from low engagement.",
+        note: "Ethics and trust declined. Reflect on prevention of harm and shared benefit before the next project.",
+        options: [ { text: "Restart and try again", to: "intro" } ],
+      },
+    };
+
+    const history = [];
+
+    function clamp(value) {
+      return Math.max(0, Math.min(10, value));
+    }
+
+    function applyEffects(effects = {}) {
+      Object.entries(effects).forEach(([key, delta]) => {
+        if (metrics[key] !== undefined) {
+          metrics[key] = clamp(metrics[key] + delta);
+        }
+      });
+      renderMetrics();
+    }
+
+    function renderMetrics() {
+      const container = document.getElementById("metrics");
+      container.innerHTML = "";
+      Object.entries(metrics).forEach(([key, value]) => {
+        const row = document.createElement("div");
+        row.className = "metric";
+        row.innerHTML = `
+          <span class="label">${key.charAt(0).toUpperCase() + key.slice(1)}</span>
+          <div class="meter"><div style="width: ${value * 10}%"></div></div>
+          <span>${value}/10</span>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function renderHistory() {
+      const container = document.getElementById("history");
+      container.innerHTML = "";
+      history.slice().reverse().forEach((entry) => {
+        const el = document.createElement("div");
+        el.className = "history-entry";
+        const badgeHtml = (entry.badges || [])
+          .map((b) => `<span class="badge">${b}</span>`)
+          .join(" ");
+        el.innerHTML = `
+          <strong>${entry.choice}</strong>
+          <small>${entry.context}</small>
+          <div class="badges">${badgeHtml}</div>
+        `;
+        container.appendChild(el);
+      });
+    }
+
+    function renderNode(nodeId) {
+      const node = nodes[nodeId];
+      if (!node) return;
+      document.getElementById("node-title").textContent = node.title;
+      document.getElementById("node-body").textContent = node.body;
+      const feedback = nodeId.startsWith("ending") ? `Feedback: ${buildFeedbackNote()}` : "";
+      document.getElementById("learning-note").textContent = [node.note || "", feedback].filter(Boolean).join(" \n");
+
+      const choicesContainer = document.getElementById("choices");
+      choicesContainer.innerHTML = "";
+      node.options.forEach((option) => {
+        const btn = document.createElement("button");
+        btn.className = "choice";
+        btn.innerHTML = `
+          <div>${option.text}</div>
+          <span class="meta">${option.context || ""}</span>
+          <span class="meta">${option.badges ? option.badges.join(" · ") : ""}</span>
+        `;
+        btn.addEventListener("click", () => {
+          history.push({ choice: option.text, context: node.title, badges: option.badges });
+          renderHistory();
+          applyEffects(option.effects);
+          renderNode(option.to);
+        });
+        choicesContainer.appendChild(btn);
+      });
+
+      document.getElementById("path-label").textContent = `Path length: ${history.length} decisions`;
+    }
+
+    document.getElementById("restart-btn").addEventListener("click", () => {
+      Object.keys(metrics).forEach((key) => (metrics[key] = 5));
+      history.length = 0;
+      renderMetrics();
+      renderHistory();
+      renderNode("intro");
+    });
+
+    // Initialize
+    renderMetrics();
+    renderNode("intro");
+  </script>
+</body>
+</html>
