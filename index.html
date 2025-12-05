@@ -38,32 +38,17 @@
       color: #cbd5e1;
     }
 
-    main.layout {
+    main {
       max-width: 1200px;
-      margin: 1.5rem auto 1rem;
+      margin: 1.5rem auto 3rem;
       padding: 0 1.25rem;
       display: grid;
-      grid-template-columns: 1.2fr 0.9fr 1fr;
+      grid-template-columns: 2fr 1fr;
       gap: 1.25rem;
     }
 
-    @media (max-width: 1080px) {
-      main.layout {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .lab-grid {
-      max-width: 1200px;
-      margin: 0 auto 3rem;
-      padding: 0 1.25rem;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 1.25rem;
-    }
-
-    @media (max-width: 1080px) {
-      .lab-grid {
+    @media (max-width: 960px) {
+      main {
         grid-template-columns: 1fr;
       }
     }
@@ -73,10 +58,6 @@
       border-radius: 14px;
       box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
       padding: 1.5rem;
-    }
-
-    .card h3 {
-      margin-top: 0;
     }
 
     .node-title {
@@ -97,7 +78,6 @@
       padding: 0.75rem 1rem;
       border-radius: 10px;
       margin-bottom: 1rem;
-      white-space: pre-wrap;
     }
 
     .choices {
@@ -144,20 +124,17 @@
       border-radius: 10px;
       background: #f8fafc;
       border: 1px solid #e2e8f0;
-      gap: 0.5rem;
     }
 
     .metric span.label {
       font-weight: 600;
-      text-transform: capitalize;
-      min-width: 90px;
     }
 
     .meter {
       position: relative;
       height: 10px;
       flex: 1;
-      margin-left: 0.35rem;
+      margin-left: 0.75rem;
       background: #e2e8f0;
       border-radius: 999px;
       overflow: hidden;
@@ -172,7 +149,7 @@
     }
 
     .history {
-      max-height: 260px;
+      max-height: 420px;
       overflow-y: auto;
       padding-right: 0.5rem;
     }
@@ -209,7 +186,6 @@
       gap: 0.75rem;
       margin-top: 1rem;
       flex-wrap: wrap;
-      align-items: center;
     }
 
     .ghost {
@@ -224,120 +200,16 @@
     .muted {
       color: #475569;
     }
-
-    .timeline {
-      display: grid;
-      gap: 0.6rem;
-      margin-top: 1rem;
-    }
-
-    .stage {
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 0.65rem 0.75rem;
-      background: #f8fafc;
-    }
-
-    .stage .status {
-      font-weight: 600;
-      margin-right: 0.4rem;
-    }
-
-    .stage.current {
-      border-color: #0ea5e9;
-      background: #e0f2fe;
-    }
-
-    .stage.done {
-      opacity: 0.85;
-    }
-
-    .coach-note {
-      background: #fff7ed;
-      border: 1px solid #fed7aa;
-      color: #9a3412;
-      padding: 0.75rem 0.9rem;
-      border-radius: 12px;
-      margin-bottom: 0.75rem;
-    }
-
-    .prompt-list {
-      list-style: none;
-      padding-left: 0;
-      margin: 0;
-      display: grid;
-      gap: 0.5rem;
-    }
-
-    .prompt-list li {
-      background: #f8fafc;
-      border: 1px dashed #cbd5e1;
-      border-radius: 10px;
-      padding: 0.65rem 0.75rem;
-    }
-
-    textarea#notebook {
-      width: 100%;
-      min-height: 150px;
-      border: 1px solid #cbd5e1;
-      border-radius: 10px;
-      padding: 0.75rem;
-      font-size: 1rem;
-      resize: vertical;
-    }
-
-    .notebook-meta {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 0.5rem;
-      color: #475569;
-    }
-
-    .checklist {
-      list-style: none;
-      padding-left: 0;
-      margin: 0;
-      display: grid;
-      gap: 0.4rem;
-    }
-
-    .checklist-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.5rem;
-      padding: 0.6rem 0.75rem;
-      border: 1px solid #e2e8f0;
-      border-radius: 10px;
-      background: #f8fafc;
-    }
-
-    .pill {
-      display: inline-block;
-      padding: 0.2rem 0.5rem;
-      border-radius: 999px;
-      font-size: 0.8rem;
-      background: #e2e8f0;
-      color: #0f172a;
-      margin-left: 0.35rem;
-    }
-
-    .feedback-preview {
-      margin-top: 0.5rem;
-      border-top: 1px solid #e2e8f0;
-      padding-top: 0.75rem;
-      color: #0f172a;
-    }
   </style>
 </head>
 <body>
   <header>
     <h1>Social Work Research Simulator</h1>
-    <p class="subtitle">An immersive lab for MSW students to practice end-to-end, ethical, community-centered research.</p>
+    <p class="subtitle">A choose-your-own-adventure for MSW students practicing ethical, rigorous, community-centered research decisions.</p>
   </header>
 
-  <main class="layout">
-    <section class="card story-card" id="story-card">
+  <main>
+    <section class="card" id="story-card">
       <h2 class="node-title" id="node-title"></h2>
       <p class="node-body" id="node-body"></p>
       <div class="learning-note" id="learning-note"></div>
@@ -352,64 +224,11 @@
       <h3>Fieldwork Dashboard</h3>
       <p class="muted">Track how your decisions impact the integrity of the study.</p>
       <div class="metrics" id="metrics"></div>
-      <div class="feedback-preview" id="feedback-preview"></div>
-      <h4>Stage Timeline</h4>
-      <div class="timeline" id="timeline"></div>
+
       <h4>Path Notes</h4>
       <div class="history" id="history"></div>
     </section>
-
-    <section class="card">
-      <h3>Simulation Coach</h3>
-      <div class="coach-note" id="coach-note"></div>
-      <h4>Practice Prompts</h4>
-      <ul class="prompt-list" id="practice-prompts"></ul>
-      <h4>Post-run Feedback</h4>
-      <p class="muted">Finish the run to unlock end-of-study coaching based on your metrics.</p>
-    </section>
   </main>
-
-  <section class="lab-grid">
-    <section class="card">
-      <h3>Field Notebook</h3>
-      <div class="notebook-meta">
-        <span>Capture observations, decisions, and rationales.</span>
-        <span id="notebook-status">Saved</span>
-      </div>
-      <textarea id="notebook" placeholder="Draft recruitment scripts, document tradeoffs, or outline debrief plans..."></textarea>
-    </section>
-
-    <section class="card">
-      <h3>Readiness Drills</h3>
-      <p class="muted">Quick checks to stay practice-ready. Toggle them as you move.</p>
-      <ul class="checklist" id="checklist"></ul>
-    </section>
-
-    <section class="card">
-      <h3>Method Reference</h3>
-      <p class="muted">Pocket reminders for interpreting the dashboard.</p>
-      <div class="checklist-item">
-        <strong>Ethics</strong>
-        <div class="muted">Mitigate harm, consent, confidentiality, and reciprocity.</div>
-      </div>
-      <div class="checklist-item">
-        <strong>Trust</strong>
-        <div class="muted">Signal accountability, share power, and keep promises.</div>
-      </div>
-      <div class="checklist-item">
-        <strong>Rigor</strong>
-        <div class="muted">Clear alignment of question, method, sampling, and analysis.</div>
-      </div>
-      <div class="checklist-item">
-        <strong>Time & Budget</strong>
-        <div class="muted">Balance pacing and resources without undermining inclusion.</div>
-      </div>
-      <div class="checklist-item">
-        <strong>Wellbeing</strong>
-        <div class="muted">Protect participant and researcher wellbeing across phases.</div>
-      </div>
-    </section>
-  </section>
 
   <script>
     const metrics = {
@@ -421,572 +240,138 @@
       wellbeing: 5,
     };
 
-    const practiceTasks = [
-      { id: "harm-plan", label: "Draft a harm mitigation plan with escalation contacts" },
-      { id: "power-map", label: "Map who holds power in decisions (agency, youth, funders)" },
-      { id: "data-flow", label: "Sketch how data are collected, stored, and shared" },
-      { id: "member-check", label: "Plan how findings will be member-checked" },
-      { id: "comp-support", label: "Confirm compensation and practical supports are funded" },
-    ];
-
-    const stageOrder = [
-      { id: "intro", label: "Orientation" },
-      { id: "defineQuestion", label: "Question" },
-      { id: "partner", label: "Partnering" },
-      { id: "dataGovernance", label: "Data Governance" },
-      { id: "method", label: "Method" },
-      { id: "sampling", label: "Recruitment" },
-      { id: "compensation", label: "Participation Support" },
-      { id: "consent", label: "Consent" },
-      { id: "instrument", label: "Instrument" },
-      { id: "pilot", label: "Pilot" },
-      { id: "field", label: "Fieldwork" },
-      { id: "analysis", label: "Analysis" },
-      { id: "reporting", label: "Reporting" },
-      { id: "reflection", label: "Reflection" },
-      { id: "sustainability", label: "Sustain" },
-    ];
-
-    function buildFeedbackNote() {
-      const lens = [];
-      if (metrics.ethics >= 7 && metrics.trust >= 7) {
-        lens.push("Ethics & trust: Your safeguards and transparency opened doors for deeper partnership.");
-      } else if (metrics.ethics <= 3 || metrics.trust <= 3) {
-        lens.push("Ethics & trust: Communities may feel extracted—plan for repair and shared benefit next time.");
-      }
-
-      if (metrics.rigor >= 7) {
-        lens.push("Rigor: Strong design choices improved credibility; ensure accessibility matches the rigor.");
-      } else if (metrics.rigor <= 3) {
-        lens.push("Rigor: Limited validity signals a need for clearer questions and alignment between methods and aims.");
-      }
-
-      if (metrics.time >= 7) {
-        lens.push("Time: Speed supported delivery, but watch for rushed steps that could erode trust.");
-      } else if (metrics.time <= 3) {
-        lens.push("Time: The slower pace protected quality—next cycle, set expectations and resource needs early.");
-      }
-
-      if (metrics.budget <= 3) {
-        lens.push("Budget: Resources were stretched; document true costs to advocate for sustainable funding.");
-      } else if (metrics.budget >= 7) {
-        lens.push("Budget: Savings were achieved—invest part of that surplus into participant benefit and data quality.");
-      }
-
-      if (metrics.wellbeing <= 3) {
-        lens.push("Wellbeing: High strain emerged; integrate debriefs and pacing for the research team.");
-      } else if (metrics.wellbeing >= 7) {
-        lens.push("Wellbeing: Your pacing supported the team; share these practices in future proposals.");
-      }
-
-      return lens.join(" ");
-    }
-
     const nodes = {
       intro: {
         title: "New Field Placement, First Study",
-        body:
-          "You've joined a community agency serving youth navigating housing instability. Your supervisor asks you to design a small study to inform service improvements. The community has seen extractive research before and is wary of outsiders.",
+        body: "You've joined a community agency serving youth navigating housing instability. Your supervisor asks you to design a small study to inform service improvements. The community has seen extractive research before and is wary of outsiders.",
         note: "Consider how early moves shape trust, feasibility, and data quality. Each choice updates the dashboard so you can see tradeoffs.",
-        coach: "Beginner move: Write down what success looks like for youth, the agency, and you. Treat this as your compass before the timeline pressure kicks in.",
-        prompts: [
-          "List three ways to invite youth voice before you even settle the question.",
-          "Draft a 1-sentence purpose statement a youth advisor could critique.",
-        ],
         options: [
-          {
-            text: "Frame the study around youth-defined priorities.",
-            context: "Slows down setup but builds consent to proceed.",
-            to: "defineQuestion",
-            effects: { trust: 1, ethics: 1, time: -1 },
-            badges: ["Community-led"],
-          },
-          {
-            text: "Start with the agency's existing grant metrics to move quickly.",
-            context: "Fast alignment with leadership needs yet may miss lived experience.",
-            to: "defineQuestion",
-            effects: { rigor: 1, time: 1, trust: -1 },
-            badges: ["Speed"],
-          },
-          {
-            text: "Adapt a national evidence-based question for local comparison.",
-            context: "Brings credibility but risks mismatch with local context.",
-            to: "defineQuestion",
-            effects: { rigor: 1, budget: -1, trust: -1 },
-            badges: ["Comparative"],
-          },
+          { text: "Frame the study around youth-defined priorities.", to: "defineQuestion", effects: { trust: 1, ethics: 1, time: -1 }, badges: ["Community-led"] },
+          { text: "Start with the agency's existing grant metrics to move quickly.", to: "defineQuestion", effects: { rigor: 1, time: 1, trust: -1 }, badges: ["Speed"] },
+          { text: "Adapt a national evidence-based question for local comparison.", to: "defineQuestion", effects: { rigor: 1, budget: -1, trust: -1 }, badges: ["Comparative"] },
         ],
       },
       defineQuestion: {
         title: "Clarify the Research Question",
-        body:
-          "Stakeholders want to understand service access, perceived safety, and the impact of drop-in programs. You need a focal question that is actionable and ethical.",
+        body: "Stakeholders want to understand service access, perceived safety, and the impact of drop-in programs. You need a focal question that is actionable and ethical.",
         note: "Narrowing scope can reduce harm and increase rigor. Assess feasibility and risk to participants.",
-        coach: "What population, what change, and what mechanism? Jot these before picking a method to avoid mission creep.",
-        prompts: [
-          "Write two versions of the question: one for youth and one for funders. Notice any language shifts.",
-          "Note what would make the answer credible to each audience.",
-        ],
         options: [
-          {
-            text: "Ask: 'How does the drop-in program change youths' sense of safety over six weeks?'",
-            context: "Tight timeline and pre/post framing demand careful measurement.",
-            to: "partner",
-            effects: { rigor: 1, time: -1, budget: -1 },
-          },
-          {
-            text: "Ask: 'What barriers keep youth from returning after their first visit?'",
-            context: "Exploratory and relational—invites stories and empathy-building.",
-            to: "partner",
-            effects: { trust: 1, ethics: 1, rigor: -1 },
-          },
-          {
-            text: "Ask: 'Do program outcomes differ by race/ethnicity across the last year?'",
-            context: "Equity lens adds value but needs adequate data and safeguards against harm.",
-            to: "partner",
-            effects: { rigor: 1, budget: -1, trust: -1 },
-          },
+          { text: "Ask: 'How does the drop-in program change youths' sense of safety over six weeks?'", to: "partner", effects: { rigor: 1, time: -1, budget: -1 } },
+          { text: "Ask: 'What barriers keep youth from returning after their first visit?'", to: "partner", effects: { trust: 1, ethics: 1, rigor: -1 } },
+          { text: "Ask: 'Do program outcomes differ by race/ethnicity across the last year?'", to: "partner", effects: { rigor: 1, budget: -1, trust: -1 } },
         ],
       },
       partner: {
         title: "Engage Partners",
-        body:
-          "A youth advisory board offers to help but has limited time. The agency director wants results quickly for a funder call.",
+        body: "A youth advisory board offers to help but has limited time. The agency director wants results quickly for a funder call.",
         note: "Engagement choices alter trust, time, and rigor. Balancing timelines with co-governance is key.",
-        coach: "Set expectations now: what can youth actually decide? What will you do if timelines slip?",
-        prompts: [
-          "Draft a short agenda for a co-design session and name one decision youth will own.",
-          "Outline the minimum data you need if timelines shrink.",
-        ],
         options: [
-          {
-            text: "Co-design instruments with the youth board over two workshops.",
-            context: "Builds ownership but requires compensating time and voice.",
-            to: "dataGovernance",
-            effects: { trust: 2, ethics: 1, time: -2, budget: -1 },
-            badges: ["Power-sharing"],
-          },
-          {
-            text: "Run a single feedback session and finalize instruments yourself.",
-            context: "Balances voice with speed; risk of missing nuance.",
-            to: "dataGovernance",
-            effects: { trust: 1, time: 1, rigor: -1 },
-          },
-          {
-            text: "Skip engagement to stay on deadline.",
-            context: "Saves time now but may undermine participation later.",
-            to: "dataGovernance",
-            effects: { time: 2, trust: -2, ethics: -1 },
-          },
-        ],
-      },
-      dataGovernance: {
-        title: "Data Governance",
-        body:
-          "The agency wants de-identified logs stored on their server. Youth advisors ask for shared control over how data are used beyond this project.",
-        note: "Clarifying ownership and reuse protects communities and researchers alike.",
-        coach: "Imagine a headline goes wrong. Who can request takedown? Who decides on reuse? Put that in writing.",
-        prompts: [
-          "List who must sign a data use agreement and what decisions each can veto.",
-          "Sketch where identifiers live, and who has keys to re-link them if needed for safety.",
-        ],
-        options: [
-          {
-            text: "Develop a data use agreement with shared decision rights for youth reps.",
-            context: "Promotes accountability but adds coordination time.",
-            to: "method",
-            effects: { trust: 2, ethics: 1, time: -1, budget: -1 },
-          },
-          {
-            text: "House data on the agency server with read-only access for you.",
-            context: "Meets IT policy, keeps access narrow, but limits co-analysis.",
-            to: "method",
-            effects: { rigor: -1, trust: 1, time: 1 },
-          },
-          {
-            text: "Store copies locally to speed analysis with minimal paperwork.",
-            context: "Fastest path yet increases privacy risk and trust erosion.",
-            to: "method",
-            effects: { time: 2, ethics: -2, trust: -1 },
-            badges: ["Data risk"],
-          },
+          { text: "Co-design instruments with the youth board over two workshops.", to: "method", effects: { trust: 2, ethics: 1, time: -2, budget: -1 }, badges: ["Power-sharing"] },
+          { text: "Run a single feedback session and finalize instruments yourself.", to: "method", effects: { trust: 1, time: 1, rigor: -1 } },
+          { text: "Skip engagement to stay on deadline.", to: "method", effects: { time: 2, trust: -2, ethics: -1 } },
         ],
       },
       method: {
         title: "Choose a Method",
-        body:
-          "The agency can provide de-identified service logs, but youth want their experiences voiced. You must balance richness with feasibility.",
+        body: "The agency can provide de-identified service logs, but youth want their experiences voiced. You must balance richness with feasibility.",
         note: "Method choice influences sampling, safety, and analysis burden.",
-        coach: "Align your question with the minimum viable data and the maximum safe participation.",
-        prompts: [
-          "Write two inclusion criteria and two exclusion criteria that minimize harm.",
-          "Note how each method will capture strength-based stories, not just deficits.",
-        ],
         options: [
-          {
-            text: "Participatory action research: focus groups + member-led analysis.",
-            context: "High ownership, higher facilitation load.",
-            to: "sampling",
-            effects: { ethics: 1, trust: 2, time: -1, budget: -1, rigor: 1 },
-            badges: ["PAR"],
-          },
-          {
-            text: "Mixed methods: survey linked to administrative data and brief interviews.",
-            context: "Balances breadth and depth with moderate burden.",
-            to: "sampling",
-            effects: { rigor: 2, budget: -1, time: -1 },
-          },
-          {
-            text: "Rapid online survey using agency mailing list.",
-            context: "Fast and cheap but may exclude those without digital access.",
-            to: "sampling",
-            effects: { time: 2, budget: 1, trust: -1, rigor: -1 },
-            badges: ["Rapid"],
-          },
+          { text: "Participatory action research: focus groups + member-led analysis.", to: "sampling", effects: { ethics: 1, trust: 2, time: -1, budget: -1, rigor: 1 }, badges: ["PAR"] },
+          { text: "Mixed methods: survey linked to administrative data and brief interviews.", to: "sampling", effects: { rigor: 2, budget: -1, time: -1 } },
+          { text: "Rapid online survey using agency mailing list.", to: "sampling", effects: { time: 2, budget: 1, trust: -1, rigor: -1 }, badges: ["Rapid"] },
         ],
       },
       sampling: {
         title: "Recruitment Strategy",
         body: "You need a plan that respects safety and yields useful variation. Some youth distrust agency channels.",
         note: "Equitable recruitment can improve both ethics and validity.",
-        coach: "Recruitment is a relationship, not a transaction. How will people hear about risks and benefits in their own words?",
-        prompts: [
-          "Draft a 3-line invitation script that explains purpose, risk, and support.",
-          "Identify who might be left out by each strategy and one mitigation move.",
-        ],
         options: [
-          {
-            text: "Youth peer navigators recruit at drop-in hours with stipends.",
-            context: "Builds safety and reach but requires training and funds.",
-            to: "compensation",
-            effects: { trust: 2, ethics: 1, budget: -2, time: -1 },
-          },
-          {
-            text: "Email all active clients; participation is opt-in online.",
-            context: "Least labor-intensive; may miss disengaged or precarious youth.",
-            to: "compensation",
-            effects: { time: 2, budget: 1, trust: -1, rigor: -1 },
-          },
-          {
-            text: "Use agency logs to randomly sample and call households.",
-            context: "Adds representativeness but could trigger privacy concerns.",
-            to: "compensation",
-            effects: { rigor: 1, time: -1, trust: -1, ethics: -1 },
-          },
-        ],
-      },
-      compensation: {
-        title: "Participation Support",
-        body:
-          "Community members ask whether youth will be compensated and how burdens like transit or phone data will be handled.",
-        note: "Compensation shapes who can participate and signals respect.",
-        coach: "Budget tells people what you value. Where will you cut if you add supports?",
-        prompts: [
-          "List every cost a participant might face (time, travel, data, childcare).",
-          "Decide how you'll communicate compensation without coercion.",
-        ],
-        options: [
-          {
-            text: "Provide cash stipends and transit cards; budget is tight.",
-            context: "Highest inclusion; might require cutting scope elsewhere.",
-            to: "consent",
-            effects: { trust: 2, ethics: 1, budget: -2 },
-          },
-          {
-            text: "Offer gift cards and snacks during sessions.",
-            context: "Moderate support; easier approvals but may not address data costs.",
-            to: "consent",
-            effects: { trust: 1, ethics: 1, budget: -1 },
-          },
-          {
-            text: "Rely on voluntary participation without compensation.",
-            context: "Saves money yet risks inequity and lower engagement.",
-            to: "consent",
-            effects: { budget: 2, trust: -2, ethics: -1 },
-          },
+          { text: "Youth peer navigators recruit at drop-in hours with stipends.", to: "consent", effects: { trust: 2, ethics: 1, budget: -2, time: -1 } },
+          { text: "Email all active clients; participation is opt-in online.", to: "consent", effects: { time: 2, budget: 1, trust: -1, rigor: -1 } },
+          { text: "Use agency logs to randomly sample and call households.", to: "consent", effects: { rigor: 1, time: -1, trust: -1, ethics: -1 } },
         ],
       },
       consent: {
         title: "Consent & Risk",
-        body:
-          "Some youth are minors, some are undocumented, and some are in crisis. The IRB requires a clear harm mitigation plan.",
+        body: "Some youth are minors, some are undocumented, and some are in crisis. The IRB requires a clear harm mitigation plan.",
         note: "Risk mitigation is a core social work value. Ethics affect trust and downstream participation.",
-        coach: "Consent is a process. Decide how you'll check ongoing assent and offer off-ramps without penalty.",
-        prompts: [
-          "Write one script line that normalizes opting out at any time.",
-          "Name who you will consult if a disclosure requires mandated reporting.",
-        ],
         options: [
-          {
-            text: "Trauma-informed, layered consent with check-ins; allow partial participation.",
-            context: "Sets tone of care; adds time per participant.",
-            to: "instrument",
-            effects: { ethics: 2, trust: 1, time: -1 },
-          },
-          {
-            text: "Digital consent form in multiple languages with hotline numbers.",
-            context: "Improves access; ensure tech and literacy supports are ready.",
-            to: "instrument",
-            effects: { ethics: 1, time: 1, budget: -1 },
-          },
-          {
-            text: "Rely on agency's existing intake consent to avoid new paperwork.",
-            context: "Fastest route yet may not cover new risks.",
-            to: "instrument",
-            effects: { time: 2, ethics: -2, trust: -1 },
-            badges: ["Risk"],
-          },
+          { text: "Trauma-informed, layered consent with check-ins; allow partial participation.", to: "instrument", effects: { ethics: 2, trust: 1, time: -1 } },
+          { text: "Digital consent form in multiple languages with hotline numbers.", to: "instrument", effects: { ethics: 1, time: 1, budget: -1 } },
+          { text: "Rely on agency's existing intake consent to avoid new paperwork.", to: "instrument", effects: { time: 2, ethics: -2, trust: -1 }, badges: ["Risk"] },
         ],
       },
       instrument: {
         title: "Instrument Design",
-        body:
-          "You must balance brevity with depth. Youth advisors warn against deficit-focused language.",
+        body: "You must balance brevity with depth. Youth advisors warn against deficit-focused language.",
         note: "Good instruments reduce harm and improve data quality.",
-        coach: "Test for dignity. Would you feel honored answering these items?",
-        prompts: [
-          "Rewrite one question from deficit to strength-based language.",
-          "Decide what you will do if a participant becomes distressed mid-interview.",
-        ],
         options: [
-          {
-            text: "Co-create interview guide emphasizing strengths and safety planning.",
-            context: "Centers voice; adds iteration cycles.",
-            to: "pilot",
-            effects: { trust: 1, rigor: 1, time: -1, ethics: 1 },
-          },
-          {
-            text: "Use a validated trauma screener plus open-ended items.",
-            context: "Higher rigor; watch for retraumatization and length.",
-            to: "pilot",
-            effects: { rigor: 2, budget: -1, time: -1, ethics: -1 },
-          },
-          {
-            text: "Short 8-item survey focusing on service satisfaction.",
-            context: "Quick and light; may miss systemic issues youth care about.",
-            to: "pilot",
-            effects: { time: 2, budget: 1, rigor: -1 },
-          },
-        ],
-      },
-      pilot: {
-        title: "Pilot & Iterate",
-        body: "A small pilot with four participants surfaces confusing items and emotional triggers.",
-        note: "Pilots catch issues early but consume time. Adjust based on what you learn.",
-        coach: "Pilots are for humility. Name what surprised you and how you'll respond before scaling.",
-        prompts: [
-          "List two changes to wording or flow to reduce harm.",
-          "Identify the smallest re-pilot that would rebuild confidence.",
-        ],
-        options: [
-          {
-            text: "Revise language with youth reviewers and re-pilot.",
-            context: "Strengthens trust and clarity; delays launch.",
-            to: "field",
-            effects: { trust: 1, rigor: 1, time: -1, budget: -1 },
-          },
-          {
-            text: "Adjust only the most confusing items to stay on schedule.",
-            context: "Protects timeline while addressing key issues.",
-            to: "field",
-            effects: { time: 1, rigor: 1, trust: -1 },
-          },
-          {
-            text: "Proceed without changes to avoid further delay.",
-            context: "Riskiest for data quality and participant experience.",
-            to: "field",
-            effects: { time: 2, trust: -1, ethics: -1 },
-          },
+          { text: "Co-create interview guide emphasizing strengths and safety planning.", to: "field", effects: { trust: 1, rigor: 1, time: -1, ethics: 1 } },
+          { text: "Use a validated trauma screener plus open-ended items.", to: "field", effects: { rigor: 2, budget: -1, time: -1, ethics: -1 } },
+          { text: "Short 8-item survey focusing on service satisfaction.", to: "field", effects: { time: 2, budget: 1, rigor: -1 } },
         ],
       },
       field: {
         title: "Fieldwork Challenge",
-        body:
-          "Midway through data collection, an agency partner asks for names of youth who describe safety concerns. Meanwhile, a participant becomes distressed while recounting past trauma.",
+        body: "Midway through data collection, an agency partner asks for names of youth who describe safety concerns. Meanwhile, a participant becomes distressed while recounting past trauma.",
         note: "Crisis response and confidentiality pressures often collide in practice.",
-        coach: "Decide now: What are your non-negotiables on confidentiality? Who will you call for backup in crisis?",
-        prompts: [
-          "Write the exact words you'll use to decline sharing identifiers while offering support.",
-          "Draft a debrief plan for yourself or co-researchers after hard sessions.",
-        ],
         options: [
-          {
-            text: "Hold boundaries: offer aggregated themes only; safety-plan with the distressed participant.",
-            context: "Protects confidentiality and wellbeing; takes time.",
-            to: "analysis",
-            effects: { ethics: 2, trust: 1, time: -1 },
-          },
-          {
-            text: "Share pseudonymized notes with the director for rapid action.",
-            context: "Could speed safety responses but weakens trust.",
-            to: "analysis",
-            effects: { trust: -1, ethics: -1, time: 1 },
-            badges: ["Confidentiality risk"],
-          },
-          {
-            text: "Pause data collection to revisit protocols with the IRB and youth board.",
-            context: "Resets safety alignment yet delays deliverables.",
-            to: "analysis",
-            effects: { ethics: 2, rigor: 1, time: -2, budget: -1 },
-          },
+          { text: "Hold boundaries: offer aggregated themes only; safety-plan with the distressed participant.", to: "analysis", effects: { ethics: 2, trust: 1, time: -1 } },
+          { text: "Share pseudonymized notes with the director for rapid action.", to: "analysis", effects: { trust: -1, ethics: -1, time: 1 }, badges: ["Confidentiality risk"] },
+          { text: "Pause data collection to revisit protocols with the IRB and youth board.", to: "analysis", effects: { ethics: 2, rigor: 1, time: -2, budget: -1 } },
         ],
       },
       analysis: {
         title: "Analysis Plan",
-        body:
-          "You have mixed qualitative notes and service logs. Youth want to see themselves in the analysis, and the director wants quick headlines.",
+        body: "You have mixed qualitative notes and service logs. Youth want to see themselves in the analysis, and the director wants quick headlines.",
         note: "Analysis choices shape credibility and accountability.",
-        coach: "Name what counts as evidence for each audience and who interprets findings alongside you.",
-        prompts: [
-          "Decide which themes require youth validation before sharing externally.",
-          "Plan how you'll present uncertainty or data gaps without losing trust.",
-        ],
         options: [
-          {
-            text: "Member-check themes with youth; run stratified descriptives; share draft visuals for edits.",
-            context: "High collaboration and rigor; adds cycles and costs.",
-            to: "reporting",
-            effects: { trust: 2, rigor: 2, time: -1, budget: -1 },
-            badges: ["Participatory"],
-          },
-          {
-            text: "Conduct regression on service outcomes and provide a one-page summary; skip member checks.",
-            context: "Meets funder speed but limits voice and reflexivity.",
-            to: "reporting",
-            effects: { time: 2, rigor: 1, trust: -1 },
-          },
-          {
-            text: "Use rapid qualitative coding to hit the deadline; defer quant analysis.",
-            context: "Fast and flexible, yet weaker validity.",
-            to: "reporting",
-            effects: { time: 2, trust: -1, rigor: -1 },
-          },
+          { text: "Member-check themes with youth; run stratified descriptives; share draft visuals for edits.", to: "reporting", effects: { trust: 2, rigor: 2, time: -1, budget: -1 }, badges: ["Participatory"] },
+          { text: "Conduct regression on service outcomes and provide a one-page summary; skip member checks.", to: "reporting", effects: { time: 2, rigor: 1, trust: -1 } },
+          { text: "Use rapid qualitative coding to hit the deadline; defer quant analysis.", to: "reporting", effects: { time: 2, trust: -1, rigor: -1 } },
         ],
       },
       reporting: {
         title: "Reporting & Accountability",
-        body:
-          "The funder briefing is in three days. Youth want messaging that centers strengths and avoids pathologizing.",
+        body: "The funder briefing is in three days. Youth want messaging that centers strengths and avoids pathologizing.",
         note: "Dissemination impacts community relationships and future access.",
-        coach: "Reporting is also intervention. Who will be harmed or helped by how you frame gaps?",
-        prompts: [
-          "Outline what you will share in public vs. internal spaces and why.",
-          "Draft a strengths-forward headline and a limitation you will say aloud.",
-        ],
         options: [
-          {
-            text: "Co-present with youth leaders; include a reflexivity section and data limitations.",
-            context: "Centers shared ownership; requires rehearsal time and stipends.",
-            to: "reflection",
-            effects: { trust: 2, ethics: 1, time: -1, budget: -1 },
-            badges: ["Shared voice"],
-          },
-          {
-            text: "Publish a policy brief without community review to meet the deadline.",
-            context: "Fastest, but risks misrepresentation and lost trust.",
-            to: "reflection",
-            effects: { time: 2, trust: -1, ethics: -1 },
-          },
-          {
-            text: "Release an academic-style report with technical detail only.",
-            context: "Elevates rigor for peers; less accessible to participants.",
-            to: "reflection",
-            effects: { rigor: 1, trust: -1 },
-          },
+          { text: "Co-present with youth leaders; include a reflexivity section and data limitations.", to: "reflection", effects: { trust: 2, ethics: 1, time: -1, budget: -1 }, badges: ["Shared voice"] },
+          { text: "Publish a policy brief without community review to meet the deadline.", to: "reflection", effects: { time: 2, trust: -1, ethics: -1 } },
+          { text: "Release an academic-style report with technical detail only.", to: "reflection", effects: { rigor: 1, trust: -1, engagement: -1 } },
         ],
       },
       reflection: {
         title: "Reflect & Plan Next Steps",
         body: "The project wraps. How will you honor participants and improve next time?",
         note: "Reflection consolidates learning and accountability.",
-        coach: "What would you do differently with the first 48 hours of the study? Name one habit you'll carry forward.",
-        prompts: [
-          "List two commitments you will report back to participants.",
-          "Document one tension you balanced well and one you would rebalance.",
-        ],
         options: [
-          {
-            text: "Hold a feedback circle and offer continued collaboration roles.",
-            context: "Deepens accountability; takes planning and compensation.",
-            to: "sustainability",
-            effects: { trust: 2, ethics: 1, budget: -1 },
-          },
-          {
-            text: "Email a thank-you summary with resource links.",
-            context: "Keeps a touchpoint with minimal effort.",
-            to: "sustainability",
-            effects: { time: 1, trust: 1 },
-          },
-          {
-            text: "Archive the project and move on to the next deadline.",
-            context: "Ends quickly but risks extractive patterns.",
-            to: "sustainability",
-            effects: { trust: -2, ethics: -1, time: 2 },
-          },
-        ],
-      },
-      sustainability: {
-        title: "Sustainability Planning",
-        body:
-          "Partners ask what will happen with the findings next year and whether youth will stay involved.",
-        note: "Closing loops builds long-term trust and realistic scope.",
-        coach: "Sustainability is scope management. Pick a promise you can keep, not ten you can't.",
-        prompts: [
-          "Draft a one-year roadmap with at least two checkpoints.",
-          "Decide where data will live and who can request changes later.",
-        ],
-        options: [
-          {
-            text: "Co-create a one-year improvement roadmap with milestones.",
-            context: "Sets shared accountability; requires facilitation time.",
-            to: "endingTrust",
-            effects: { trust: 1, rigor: 1, time: -1, budget: -1 },
-          },
-          {
-            text: "Schedule a six-month check-in and share anonymized data for agency use only.",
-            context: "Practical and bounded; moderate trust-building.",
-            to: "endingBalanced",
-            effects: { trust: 1, time: 1 },
-          },
-          {
-            text: "Deliver files and step back without a follow-up plan.",
-            context: "Lowest ongoing effort yet may erode goodwill.",
-            to: "endingExtractive",
-            effects: { trust: -1, time: 2, ethics: -1 },
-          },
+          { text: "Hold a feedback circle and offer continued collaboration roles.", to: "endingTrust", effects: { trust: 2, ethics: 1, budget: -1 } },
+          { text: "Email a thank-you summary with resource links.", to: "endingBalanced", effects: { time: 1, trust: 1 } },
+          { text: "Archive the project and move on to the next deadline.", to: "endingExtractive", effects: { trust: -2, ethics: -1, time: 2 } },
         ],
       },
       endingTrust: {
         title: "Outcome: Partner and Learn",
-        body:
-          "Youth report feeling heard and want to co-lead future evaluations. The agency secures a grant that includes stipends for youth researchers.",
+        body: "Youth report feeling heard and want to co-lead future evaluations. The agency secures a grant that includes stipends for youth researchers.",
         note: "High trust and ethics opened doors. Consider where rigor or time suffered and how to rebalance next cycle.",
-        coach: "Celebrate the partnership. Record what made co-governance possible so you can reproduce it elsewhere.",
-        prompts: ["Write three practices you will standardize in future placements."],
-        options: [{ text: "Restart with a new cohort", to: "intro" }],
+        options: [ { text: "Restart with a new cohort", to: "intro" } ],
       },
       endingBalanced: {
         title: "Outcome: Balanced Delivery",
-        body:
-          "Findings were accepted by the funder and modestly informed program tweaks. Some youth wished for deeper involvement but appreciated the follow-up.",
+        body: "Findings were accepted by the funder and modestly informed program tweaks. Some youth wished for deeper involvement but appreciated the follow-up.",
         note: "You achieved moderate trust and rigor. Next time, invest early in co-governance to strengthen impact.",
-        coach: "Name the smallest earlier decision that could have grown trust without losing time.",
-        prompts: ["Pick one area (ethics, rigor, or trust) to stretch in your next run."],
-        options: [{ text: "Restart and test a new approach", to: "intro" }],
+        options: [ { text: "Restart and test a new approach", to: "intro" } ],
       },
       endingExtractive: {
         title: "Outcome: Transactional Study",
-        body:
-          "The funder call was met, but community partners feel used and decline future participation. Data quality suffered from low engagement.",
+        body: "The funder call was met, but community partners feel used and decline future participation. Data quality suffered from low engagement.",
         note: "Ethics and trust declined. Reflect on prevention of harm and shared benefit before the next project.",
-        coach: "Repair is possible. Plan a harm-reduction path: apology, sharing power, and clearer boundaries.",
-        prompts: ["List two repair steps you would take before launching another study."],
-        options: [{ text: "Restart and try again", to: "intro" }],
+        options: [ { text: "Restart and try again", to: "intro" } ],
       },
     };
 
     const history = [];
-    let checklistState = {};
 
     function clamp(value) {
       return Math.max(0, Math.min(10, value));
@@ -999,7 +384,6 @@
         }
       });
       renderMetrics();
-      renderFeedbackPreview();
     }
 
     function renderMetrics() {
@@ -1009,7 +393,7 @@
         const row = document.createElement("div");
         row.className = "metric";
         row.innerHTML = `
-          <span class="label">${key}</span>
+          <span class="label">${key.charAt(0).toUpperCase() + key.slice(1)}</span>
           <div class="meter"><div style="width: ${value * 10}%"></div></div>
           <span>${value}/10</span>
         `;
@@ -1020,73 +404,18 @@
     function renderHistory() {
       const container = document.getElementById("history");
       container.innerHTML = "";
-      history
-        .slice()
-        .reverse()
-        .forEach((entry) => {
-          const el = document.createElement("div");
-          el.className = "history-entry";
-          const badgeHtml = (entry.badges || [])
-            .map((b) => `<span class="badge">${b}</span>`)
-            .join(" ");
-          el.innerHTML = `
+      history.slice().reverse().forEach((entry) => {
+        const el = document.createElement("div");
+        el.className = "history-entry";
+        const badgeHtml = (entry.badges || [])
+          .map((b) => `<span class="badge">${b}</span>`)
+          .join(" ");
+        el.innerHTML = `
           <strong>${entry.choice}</strong>
           <small>${entry.context}</small>
           <div class="badges">${badgeHtml}</div>
         `;
-          container.appendChild(el);
-        });
-    }
-
-    function renderCoach(nodeId) {
-      const node = nodes[nodeId] || {};
-      document.getElementById("coach-note").textContent = node.coach || "Use the dashboard as a compass. Try to keep at least two metrics steady while you stretch a third.";
-      const list = document.getElementById("practice-prompts");
-      list.innerHTML = "";
-      (node.prompts || ["Note one ethical risk and one feasibility risk before choosing an option."])
-        .forEach((prompt) => {
-          const li = document.createElement("li");
-          li.textContent = prompt;
-          list.appendChild(li);
-        });
-    }
-
-    function renderTimeline(currentId) {
-      const container = document.getElementById("timeline");
-      container.innerHTML = "";
-      const currentIndex = stageOrder.findIndex((s) => s.id === currentId);
-      stageOrder.forEach((stage, index) => {
-        const row = document.createElement("div");
-        row.className = "stage";
-        if (index < currentIndex) row.classList.add("done");
-        if (index === currentIndex) row.classList.add("current");
-        const status = index < currentIndex ? "Done" : index === currentIndex ? "Current" : "Next";
-        row.innerHTML = `<span class="status">${status}</span>${stage.label}`;
-        container.appendChild(row);
-      });
-    }
-
-    function renderFeedbackPreview() {
-      const preview = document.getElementById("feedback-preview");
-      preview.textContent = buildFeedbackNote();
-    }
-
-    function renderChecklist() {
-      const list = document.getElementById("checklist");
-      list.innerHTML = "";
-      practiceTasks.forEach((task) => {
-        const li = document.createElement("li");
-        li.className = "checklist-item";
-        const checked = checklistState[task.id];
-        li.innerHTML = `
-          <input type="checkbox" id="${task.id}" ${checked ? "checked" : ""} />
-          <label for="${task.id}">${task.label}</label>
-        `;
-        list.appendChild(li);
-        li.querySelector("input").addEventListener("change", (e) => {
-          checklistState[task.id] = e.target.checked;
-          localStorage.setItem("research-checklist", JSON.stringify(checklistState));
-        });
+        container.appendChild(el);
       });
     }
 
@@ -1095,8 +424,7 @@
       if (!node) return;
       document.getElementById("node-title").textContent = node.title;
       document.getElementById("node-body").textContent = node.body;
-      const feedback = nodeId.startsWith("ending") ? `Feedback: ${buildFeedbackNote()}` : "";
-      document.getElementById("learning-note").textContent = [node.note || "", feedback].filter(Boolean).join(" \n");
+      document.getElementById("learning-note").textContent = node.note || "";
 
       const choicesContainer = document.getElementById("choices");
       choicesContainer.innerHTML = "";
@@ -1105,7 +433,6 @@
         btn.className = "choice";
         btn.innerHTML = `
           <div>${option.text}</div>
-          <span class="meta">${option.context || ""}</span>
           <span class="meta">${option.badges ? option.badges.join(" · ") : ""}</span>
         `;
         btn.addEventListener("click", () => {
@@ -1117,32 +444,7 @@
         choicesContainer.appendChild(btn);
       });
 
-      document.getElementById("path-label").textContent = `Decisions made: ${history.length}`;
-      renderCoach(nodeId);
-      renderTimeline(nodeId);
-    }
-
-    function loadNotebook() {
-      const saved = localStorage.getItem("research-notebook") || "";
-      const textarea = document.getElementById("notebook");
-      textarea.value = saved;
-      document.getElementById("notebook-status").textContent = "Saved";
-      textarea.addEventListener("input", () => {
-        localStorage.setItem("research-notebook", textarea.value);
-        document.getElementById("notebook-status").textContent = "Saving...";
-        setTimeout(() => {
-          document.getElementById("notebook-status").textContent = "Saved";
-        }, 400);
-      });
-    }
-
-    function loadChecklist() {
-      try {
-        checklistState = JSON.parse(localStorage.getItem("research-checklist")) || {};
-      } catch (e) {
-        checklistState = {};
-      }
-      renderChecklist();
+      document.getElementById("path-label").textContent = `Path length: ${history.length} decisions`;
     }
 
     document.getElementById("restart-btn").addEventListener("click", () => {
@@ -1150,16 +452,12 @@
       history.length = 0;
       renderMetrics();
       renderHistory();
-      renderFeedbackPreview();
       renderNode("intro");
     });
 
     // Initialize
     renderMetrics();
-    renderFeedbackPreview();
     renderNode("intro");
-    loadNotebook();
-    loadChecklist();
   </script>
 </body>
 </html>
